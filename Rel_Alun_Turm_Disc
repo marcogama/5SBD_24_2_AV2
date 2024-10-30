@@ -1,0 +1,70 @@
+//Entidades
+
+namespace Grad5SBDnoite.Entities;
+
+public class Aluno
+{
+    [Key()]
+    public int Mat { get; set; }
+    [Foreign Key("Turma")]
+    public int Id_Turma { get; set; }
+    public int virtual Turma Turma { get; set; }
+    public string Nome { get; set; } = string.Empty;
+    public string Periodo { get; set; } = string.Empty;
+    public string Curso { get; set; } = string.Empty;
+}
+
+public void Save()
+{
+    var db = new BaseContext();
+    db.Aluno.Add(this);
+    db.SaveChanges();
+}
+
+
+public class Turma
+{
+    [Key()]
+    public int Id { get; set; }
+    [Foreign Key("Disciplina")]
+    public Id_Disc { get; set; }
+    public virtual Disciplina Disciplina { get; set; }
+    public int Cod_Turma { get; set; } = string.Empty;
+    public string Cod_Sala { get; set; } = string.Empty;
+}
+
+public void Save()
+{
+    var db = new BaseContext();
+    db.Turma.Add(this);
+    db.SaveChanges();
+}
+
+
+public class Disciplina
+{
+    [Key()]
+    public int Id { get; set; }
+    public string Cod_Disc { get; set; } = string.Empty;
+    public string Nome_Disc { get; set; } = string.Empty;
+}
+
+public void Save()
+{
+    var db = new BaseContext();
+    db.Disciplina.Add(this);
+    db.SaveChanges();
+}
+
+//Context
+
+
+namespace Ligacoes
+
+ public class AppDbContext : DbContext
+  {
+      public BaseContext() : base( "5SBD_GradAlTurDisc") {}
+      public DbSet<Aluno> Aluno { get; set; } = null!;
+      public DbSet<Turma> Turma { get; set; } = null!;
+      public DbSet<Disciplina> Disciplina { get; set; } = null!;
+  }
